@@ -1,3 +1,5 @@
 .*.swp
 temp_*
 foo*
+a.out
+*.o
