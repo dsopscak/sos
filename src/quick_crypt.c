@@ -59,3 +59,15 @@ void quick_crypt_destroy(QC *doomed)
     free(doomed);
     }
 
+int quick_crypt_save(QC *qc)
+    {
+    const char *key;
+    unsigned char *data;
+    for (list_start_it(qc->list, &key, &data);
+        key && data;
+        list_next_it(qc->list, &key, &data))
+        {
+        /* TODO: something */
+        }
+    return 0;
+    }

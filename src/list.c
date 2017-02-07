@@ -15,6 +15,7 @@ struct LIST
     {
     NODE *first;
     NODE *last;
+    NODE *it;
     };
 
 LIST *list_create()
@@ -22,6 +23,7 @@ LIST *list_create()
     LIST *list = malloc(sizeof(LIST));
     list->first = NULL;
     list->last = NULL;
+    list->it = NULL;
 
     return list;
     }
@@ -75,4 +77,34 @@ unsigned char *list_get(LIST *list, const char *key)
     if (node)
         return node->data;
     return NULL;
+    }
+
+void list_start_it(LIST *list, const char **key, unsigned char **data)
+    {
+    list->it = list->first;
+    if (list->it)
+        {
+        *key = list->it->key;
+        *data = list->it->data;
+        }
+    else
+        {
+        *key = NULL;
+        *data = NULL;
+        }
+    }
+
+void list_next_it(LIST *list, const char **key, unsigned char **data)
+    {
+    list->it = list->it->next;
+    if (list->it)
+        {
+        *key = list->it->key;
+        *data = list->it->data;
+        }
+    else
+        {
+        *key = NULL;
+        *data = NULL;
+        }
     }
