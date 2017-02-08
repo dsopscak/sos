@@ -1,4 +1,7 @@
 /* list.h
+ *
+ * This is a minimalistic and very specific list implementaion with no
+ * ownership semantics.
 */
 
 typedef struct LIST LIST;
