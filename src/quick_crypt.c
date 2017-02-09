@@ -94,11 +94,12 @@ int quick_crypt_save(QC *qc)
     return 0;
     }
 
-static void hash(QC *qc, const char *s)
+static void hash(QC *qc, const char *pass, const char *salt)
     {
     SHA256_CTX ctx;
     sha256_init(&ctx);
-    sha256_update(&ctx, s, strlen(s));
+    sha256_update(&ctx, pass, strlen(pass));
+    sha256_update(&ctx, salt, strlen(salt));
     sha256_final(&ctx, qc->temp_hash);
     }
 
@@ -113,8 +114,8 @@ const char *quick_crypt_get(QC *qc, const char *key, const char *passphrase)
     unsigned char *data = list_get(qc->list, key);
     if (data)
         {
-        hash(qc, passphrase);
-        xor_data(qc->temp_hash, data, qc->temp_data);
+        hash(qc, passphrase, key);
+        xor_data(data, qc->temp_hash, qc->temp_data);
         return qc->temp_data;
         }
     // else
@@ -130,7 +131,7 @@ int quick_crypt_put(QC *qc,
         return -1;
     unsigned char tbuf[SHA256_BLOCK_SIZE];
     strncpy(tbuf, s, sizeof(tbuf));
-    hash(qc, passphrase);
+    hash(qc, passphrase, key);
     xor_data(qc->temp_hash, tbuf, qc->temp_data);
 
     /* NOTE: the following is *bad* if done more than once in lifetime

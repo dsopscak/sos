@@ -23,9 +23,9 @@ static void print_list(LIST *list)
 
     for (list_start_it(list, &k, &d); k; list_next_it(list, &k, &d))
         {
-        printf("[%s]=>[");
+        printf("[%s]=>[", k);
         fwrite(d, 32, 1, stdout);
-        printf("\n");
+        printf("]\n");
         }
     }
 
