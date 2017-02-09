@@ -23,7 +23,7 @@ struct QC
 QC *quick_crypt_create(const char *filename)
     {
     QC *ctx = NULL;
-    FILE *f = fopen(filename, "r+");
+    FILE *f = fopen(filename, "rb+");
     if (f)
         {
         ctx = malloc(sizeof(QC));
@@ -53,7 +53,7 @@ QC *quick_crypt_create(const char *filename)
         }
     else if (errno == ENOENT)
         {
-        f = fopen(filename, "w");
+        f = fopen(filename, "wb");
         if (f)
             {
             ctx = malloc(sizeof(QC));
