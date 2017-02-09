@@ -38,8 +38,8 @@ QC *quick_crypt_create(const char *filename)
             rewind(ctx->f);
             fread(ctx->data, 1, file_size, f);
 
-            char *key = ctx->data;
-            char *p = ctx->data;
+            const char *key = (const char *)ctx->data;
+            unsigned char *p = ctx->data;
 
             while (1)
                 {
@@ -47,7 +47,7 @@ QC *quick_crypt_create(const char *filename)
                 if (! *++p) break;
                 list_put(ctx->list, key, p);
                 p += SHA256_BLOCK_SIZE;
-                key = p;
+                key = (const char *)p;
                 }
             }
         }
@@ -98,8 +98,8 @@ static void hash(QC *qc, const char *pass, const char *salt)
     {
     SHA256_CTX ctx;
     sha256_init(&ctx);
-    sha256_update(&ctx, pass, strlen(pass));
-    sha256_update(&ctx, salt, strlen(salt));
+    sha256_update(&ctx, (unsigned char *)pass, strlen(pass));
+    sha256_update(&ctx, (unsigned char *)salt, strlen(salt));
     sha256_final(&ctx, qc->temp_hash);
     }
 
@@ -116,7 +116,7 @@ const char *quick_crypt_get(QC *qc, const char *key, const char *passphrase)
         {
         hash(qc, passphrase, key);
         xor_data(data, qc->temp_hash, qc->temp_data);
-        return qc->temp_data;
+        return (const char *)qc->temp_data;
         }
     // else
     return NULL;
@@ -129,10 +129,10 @@ int quick_crypt_put(QC *qc,
     {
     if (strlen(s) > SHA256_BLOCK_SIZE - 1)
         return -1;
-    unsigned char tbuf[SHA256_BLOCK_SIZE];
+    char tbuf[SHA256_BLOCK_SIZE];
     strncpy(tbuf, s, sizeof(tbuf));
     hash(qc, passphrase, key);
-    xor_data(qc->temp_hash, tbuf, qc->temp_data);
+    xor_data(qc->temp_hash, (unsigned char *)tbuf, qc->temp_data);
 
     /* NOTE: the following is *bad* if done more than once in lifetime
      * of qc 
