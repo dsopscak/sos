@@ -12,5 +12,5 @@ which prints to stdout the decrypted string from the given file associated with 
 
 which inserts/updates the string associated with the given key.
 
-Uses simple (hopefully strong enough) encryption based on the SHA256 hash of the passphrase. XOR's the plaintext/cyphertest with the hashed passphrase salted with the key. The 32 byte limit insures that bytes in the hash are used not more than once.
+Uses simple (hopefully strong enough) encryption based on the SHA256 hash of the passphrase. XOR's the plaintext/cyphertext with the hashed passphrase salted with the key. The 32 byte limit insures that bytes in the hash are used not more than once.
 
