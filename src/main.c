@@ -7,7 +7,7 @@
 
 void usage()
     {
-    printf("usage: qc <file> <passphrase> <key> [<value>]\n");
+    printf("usage: sos <file> <passphrase> <key> [<value>]\n");
     exit(-1);
     }
 

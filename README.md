@@ -1,14 +1,15 @@
-# quick_crypt
+# sos
+### shack of secrets
 
 A simple tool focused on quick encryption and decryption of short (< 32) strings. 
 
 Has two modes:
 
-`$ qc <file> <passphrase> <key>`
+`$ sos <file> <passphrase> <key>`
 
 which prints to stdout the decrypted string from the given file associated with the given key, and
 
-`$ qc <file> <passphrase> <key> <new string>`
+`$ sos <file> <passphrase> <key> <new string>`
 
 which inserts/updates the string associated with the given key.
 

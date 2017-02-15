@@ -1,8 +1,8 @@
 CFLAGS = -std=c99 -Wall
 CC = gcc
 
-qc: main.o sha256.o list.o quick_crypt.o
-	gcc -o qc $^ 
+sos: main.o sha256.o list.o quick_crypt.o
+	gcc -o sos $^ 
 
 clean:
-	rm -f *.o qc
+	rm -f *.o sos
