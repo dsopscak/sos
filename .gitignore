@@ -4,3 +4,4 @@ foo*
 a.out
 *.o
 sos
+test_data
