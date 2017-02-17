@@ -41,19 +41,27 @@ int main(int argc, char *argv[])
             if (s)
                 printf("%s\n", s);
             else
-                return 1;
+                {
+                fprintf(stderr, "[%s] not found in %s\n", key, file_name);
+                exit(-1);
+                }
             }
         else
             {
             const char *value = argv[4];
-            quick_crypt_put(qc, key, pass, value);
+            if (quick_crypt_put(qc, key, pass, value))
+                {
+                fprintf(stderr, "sos failed\n");
+                exit(-1);
+                }
+
             quick_crypt_save(qc);
             }
 
         }
     else
         {
-        printf("qc: init error with file [%s]\n", file_name);
+        fprintf(stderr, "qc: init error with file [%s]\n", file_name);
         exit(-1);
         }
 

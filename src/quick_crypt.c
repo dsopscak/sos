@@ -128,7 +128,10 @@ int quick_crypt_put(QC *qc,
                     const char *s)
     {
     if (strlen(s) > SHA256_BLOCK_SIZE - 1)
+        {
+        fprintf(stderr, "[%s] exceeds the 31 byte limit\n", s);
         return -1;
+        }
     char tbuf[SHA256_BLOCK_SIZE];
     strncpy(tbuf, s, sizeof(tbuf));
     hash(qc, passphrase, key);
